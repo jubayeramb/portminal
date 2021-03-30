@@ -59,6 +59,13 @@ a:hover{
     box-shadow: 0 0 20px rgba(19, 17, 17, 0.877);
     overflow-x: hidden;
     overflow-y: auto;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.terminal::-webkit-scrollbar {
+  display: none;
 }
 .welcome-screen{
     line-height: 1.8rem;
@@ -102,7 +109,7 @@ a:hover{
 }
 /* specific span class for red color  */
 .red-color{
-    color: #f13838da;
+    color: #ff5555da;
 }
 .green-color{
     color: #4bd88d;

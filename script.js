@@ -1,5 +1,10 @@
 const allCommands = [
     {
+        command: '',
+        result: '',
+        elements: '',
+    },
+    {
         command: 'clear',
         result: '',
         elements: '',
@@ -7,14 +12,14 @@ const allCommands = [
     {
         command: 'help',
         result: `Use this command to get your result: <br>
-        about contact skill welcome`,
+        about contact skill welcome <br><br>`,
         elements: '',
     },
     {
         command: 'about',
         result: `I'm a super simple and busy person at all, having less time in hand!
         I'm a Tech enthusiast, and love to learn all the new tech stuffs and stacks!
-        And trying to do so.`,
+        And trying to do so.<br><br>`,
         elements: '',
     },
     {
@@ -23,12 +28,12 @@ const allCommands = [
         Here is my contact info: <br>
         E-mail: <a href="mailto:jubayeramb@gmail.com">jubayeramb@gmail.com</a> <br>
         LinkedIn: <a href="https://www.linkedin.com/in/jubayeramb/"> Jubayer Al Mamun </a> <br>
-        Instagram: <a href="https://www.instagram.com/jubayer_amb/"> Jubayer Al Mamun </a> `,
+        Instagram: <a href="https://www.instagram.com/jubayer_amb/"> Jubayer Al Mamun </a> <br><br>`,
         elements: '',
     },
     {
         command: 'skill',
-        result: `I'm a newbie! I'm learning all the new things, I found. And still that's my skill.`,
+        result: `I'm a newbie! I'm learning all the new things, I found. And still that's my skill.<br><br>`,
         elements: '',
     },
     {
@@ -48,11 +53,6 @@ const allCommands = [
     },
 ];
 
-let commandList = [];
-for (let n = 0; n < allCommands.length; n++) {
-    commandList.push(allCommands[n].command);
-};
-
 const welcomeScreen = document.querySelector('.welcome-screen');
 const preLabelForEmptyCommand = document.querySelector('.label-for-empty-command');
 const commandInput = document.querySelector('#command');
@@ -60,7 +60,7 @@ const commandResult = document.querySelector('.command-result');
 
 
 // initial codes for first page load
-welcomeScreen.innerHTML = allCommands[5].elements;
+welcomeScreen.innerHTML = allCommands[6].elements;
 
 // command input keypress event
 commandInput.addEventListener("keypress", (event) => {
@@ -69,40 +69,78 @@ commandInput.addEventListener("keypress", (event) => {
     }
 });
 
-const commandInputLabel = `<label class="command-input-lebel src-code-font">root@jubayer's-portfolio:~$ </label>`;
+
+// defining commandExicution function
+let commandAvailable = false;
+let i = 0;
 commandExicution = () => {
     // storing the input command value for 'command' veriable
     let command = String(commandInput.value).toLowerCase().trim();
-    // pressing key ENTER without any input command
-    if (commandInput.value == '') {
-        preLabelForEmptyCommand.innerHTML += commandInputLabel + '<br>';
-    } else if (commandInput.value != '') {
-        for (let i = 0; i < allCommands.length; i++) {
-            // here "allCommnads" is an array defined at the beginning.
+        for (i = 0; i < allCommands.length; i++) {
+            // command == commandList.[j] ? runCommand() : emptyCommand();
             if (command == allCommands[i].command) {
-                welcomeScreen.innerHTML = allCommands[i].elements;
-                // defining new label for new command
-                let preLabelWithCommand = document.createElement('label');
-                preLabelWithCommand.classList.add('command-input-label');
-                preLabelWithCommand.innerHTML = commandInputLabel + `<span class="green-color"> ${command} </span>`;
-                // defining paragraph tag for command result
-                let pTagForResult = document.createElement('p');
-                pTagForResult.classList.add('result');
-                pTagForResult.innerHTML = allCommands[i].result;
-                // appending label and result P tag to the commandResult div for each iteration
-                commandResult.appendChild(preLabelWithCommand);
-                commandResult.appendChild(pTagForResult);
-                // clearing the commnand input field
-                commandInput.value = '';
-            };
+                commandAvailable = true;
+                break;
+            } else { commandAvailable = false; };
         };
-        if (command == 'clear' || command == 'welcome') {
-            commandResult.innerHTML = '';
-            preLabelForEmptyCommand.innerHTML = '';
+        if (commandAvailable) {
+            // here "allCommnads" is an array defined at the beginning.
+            commandResultExecution(i, command);
+            if (command == 'clear' || command == 'welcome') {
+                commandResult.innerHTML = '';
+                preLabelForEmptyCommand.innerHTML = '';
+            };
+        } else if (!commandAvailable) {
+            commandResultExecution(i, command);
         };
     };
-
+    
+// creating elements
+commandResultExecution = (i, command) => {
+    welcomeScreen.innerHTML = commandAvailable ? allCommands[i].elements : '';
+    // defining new label for new command
+    let preLabelWithCommand = document.createElement('label');
+    preLabelWithCommand.classList.add('command-input-label');
+    preLabelWithCommand.innerHTML = `root@jubayer's-portfolio:~$ `  + `<span class="green-color"> ${command}</span>`;
+    // defining paragraph tag for command result
+    let pTagForResult = document.createElement('p');
+    pTagForResult.innerHTML = commandAvailable ? allCommands[i].result : `<span class="red-color">'${command}' is not a valid command</span> <br> type 'help' to get all the valid commands <br><br>`;
+            // appending label and result P tag to the commandResult div for each iteration
+            commandResult.appendChild(preLabelWithCommand);
+            commandResult.appendChild(pTagForResult);
+            // clearing the commnand input field
+            commandInput.value = '';
 };
+
+    // // pressing key ENTER without any input command
+    // if (commandInput.value == '') {
+    //     preLabelForEmptyCommand.innerHTML += commandInputLabel + '<br>';
+    // } else if (commandInput.value != '') {
+    //     for (let i = 0; i < allCommands.length; i++) {
+    //         // here "allCommnads" is an array defined at the beginning.
+    //         if (command == allCommands[i].command) {
+    //             welcomeScreen.innerHTML = allCommands[i].elements;
+    //             // defining new label for new command
+    //             let preLabelWithCommand = document.createElement('label');
+    //             preLabelWithCommand.classList.add('command-input-label');
+    //             preLabelWithCommand.innerHTML = commandInputLabel + `<span class="green-color"> ${command} </span>`;
+    //             // defining paragraph tag for command result
+    //             let pTagForResult = document.createElement('p');
+    //             pTagForResult.classList.add('result');
+    //             pTagForResult.innerHTML = allCommands[i].result;
+    //             // appending label and result P tag to the commandResult div for each iteration
+    //             commandResult.appendChild(preLabelWithCommand);
+    //             commandResult.appendChild(pTagForResult);
+    //             // clearing the commnand input field
+    //             commandInput.value = '';
+    //         };
+    //     };
+    //     if (command == 'clear' || command == 'welcome') {
+    //         commandResult.innerHTML = '';
+    //         preLabelForEmptyCommand.innerHTML = '';
+    //     };
+    // };
+
 // this snippet is for getiing focused the command input field, clicking the body area
 document.body.addEventListener('click', () => {
     commandInput.focus();
