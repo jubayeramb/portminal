@@ -71,7 +71,7 @@ commandInput.addEventListener("keypress", (event) => {
 
 
 // defining commandExicution function
-let commandAvailable = false;
+let isCommandAvailable = false;
 let i = 0;
 commandExicution = () => {
     // storing the input command value for 'command' veriable
@@ -79,67 +79,33 @@ commandExicution = () => {
         for (i = 0; i < allCommands.length; i++) {
             // command == commandList.[j] ? runCommand() : emptyCommand();
             if (command == allCommands[i].command) {
-                commandAvailable = true;
+                isCommandAvailable = true;
                 break;
-            } else { commandAvailable = false; };
+            } else { isCommandAvailable = false; };
         };
-        if (commandAvailable) {
-            // here "allCommnads" is an array defined at the beginning.
-            commandResultExecution(i, command);
-            if (command == 'clear' || command == 'welcome') {
-                commandResult.innerHTML = '';
-                preLabelForEmptyCommand.innerHTML = '';
-            };
-        } else if (!commandAvailable) {
-            commandResultExecution(i, command);
+        commandResultExecution(i, command);
+        if (command == 'clear' || command == 'welcome') {
+            commandResult.innerHTML = '';
+            preLabelForEmptyCommand.innerHTML = '';
         };
     };
     
 // creating elements
 commandResultExecution = (i, command) => {
-    welcomeScreen.innerHTML = commandAvailable ? allCommands[i].elements : '';
+    welcomeScreen.innerHTML = isCommandAvailable ? allCommands[i].elements : '';
     // defining new label for new command
     let preLabelWithCommand = document.createElement('label');
     preLabelWithCommand.classList.add('command-input-label');
     preLabelWithCommand.innerHTML = `root@jubayer's-portfolio:~$ `  + `<span class="green-color"> ${command}</span>`;
     // defining paragraph tag for command result
     let pTagForResult = document.createElement('p');
-    pTagForResult.innerHTML = commandAvailable ? allCommands[i].result : `<span class="red-color">'${command}' is not a valid command</span> <br> type 'help' to get all the valid commands <br><br>`;
+    pTagForResult.innerHTML = isCommandAvailable ? allCommands[i].result : `<span class="red-color">'${command}' is not a valid command</span> <br> type 'help' to get all the valid commands <br><br>`;
             // appending label and result P tag to the commandResult div for each iteration
             commandResult.appendChild(preLabelWithCommand);
             commandResult.appendChild(pTagForResult);
             // clearing the commnand input field
             commandInput.value = '';
 };
-
-    // // pressing key ENTER without any input command
-    // if (commandInput.value == '') {
-    //     preLabelForEmptyCommand.innerHTML += commandInputLabel + '<br>';
-    // } else if (commandInput.value != '') {
-    //     for (let i = 0; i < allCommands.length; i++) {
-    //         // here "allCommnads" is an array defined at the beginning.
-    //         if (command == allCommands[i].command) {
-    //             welcomeScreen.innerHTML = allCommands[i].elements;
-    //             // defining new label for new command
-    //             let preLabelWithCommand = document.createElement('label');
-    //             preLabelWithCommand.classList.add('command-input-label');
-    //             preLabelWithCommand.innerHTML = commandInputLabel + `<span class="green-color"> ${command} </span>`;
-    //             // defining paragraph tag for command result
-    //             let pTagForResult = document.createElement('p');
-    //             pTagForResult.classList.add('result');
-    //             pTagForResult.innerHTML = allCommands[i].result;
-    //             // appending label and result P tag to the commandResult div for each iteration
-    //             commandResult.appendChild(preLabelWithCommand);
-    //             commandResult.appendChild(pTagForResult);
-    //             // clearing the commnand input field
-    //             commandInput.value = '';
-    //         };
-    //     };
-    //     if (command == 'clear' || command == 'welcome') {
-    //         commandResult.innerHTML = '';
-    //         preLabelForEmptyCommand.innerHTML = '';
-    //     };
-    // };
 
 // this snippet is for getiing focused the command input field, clicking the body area
 document.body.addEventListener('click', () => {
