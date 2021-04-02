@@ -45,7 +45,7 @@ const allCommands = [
                             Programming Enthusiast, Learner & Self Taught Programmer
                         </p>
                         <p class="text src-code-font">
-                            To Learn More About Me, Type a command Below <br>
+                            To Learn More, Type a command Below <br>
                         <p class="command-list src-code-font">
                             about contact skill welcome
                         </p>
