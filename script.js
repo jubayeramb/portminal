@@ -60,13 +60,24 @@ const commandResult = document.querySelector('.command-result');
 
 
 // initial codes for first page load
-welcomeScreen.innerHTML = allCommands[6].elements;
+for (let i = 0; i < allCommands.length; i++) {
+    if (allCommands[i].command == 'welcome') {
+        welcomeScreen.innerHTML = allCommands[i].elements;
+        break;
+    };
+};
 
 // command input keypress event
 commandInput.addEventListener("keypress", (event) => {
     if (event.keyCode === 13) {
         commandExicution();
     }
+});
+commandInput.addEventListener("keydown", (event) => {
+   if (event.keyCode === 38) {
+       console.log('up keypressed');
+    }
+    console.log(event.keyCode)
 });
 
 
