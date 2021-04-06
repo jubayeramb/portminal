@@ -73,12 +73,15 @@ commandInput.addEventListener("keypress", (event) => {
         commandExicution();
     }
 });
-commandInput.addEventListener("keydown", (event) => {
-   if (event.keyCode === 38) {
-       console.log('up keypressed');
-    }
-    console.log(event.keyCode)
-});
+
+// up and down key terminal history functionality
+
+// commandInput.addEventListener("keydown", (event) => {
+//    if (event.keyCode === 38) {
+//        console.log('up keypressed');
+//     }
+//     console.log(event.keyCode)
+// });
 
 
 // defining commandExicution function
