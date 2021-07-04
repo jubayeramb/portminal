@@ -11,7 +11,7 @@ const allCommands = [
     },
     {
         command: 'help',
-        result: `Use this command to get your result: <br>
+        result: `Use a command bellow to get your result: <br>
         about contact skill welcome <br><br>`,
         elements: '',
     },
